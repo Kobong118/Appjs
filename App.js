@@ -1,2 +1,4 @@
-console.log("oke");
-
+//engine buat soal
+function buatSoal(){
+ 
+}s
