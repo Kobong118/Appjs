@@ -6,3 +6,4 @@ const rl=readline.createInterface({
   output:process.stdout,
 });
 kalimahIsim.mainAddData();
+//CEK
