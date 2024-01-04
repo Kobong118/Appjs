@@ -1,0 +1,148 @@
+  <h3 class="text-center">input data</h3>
+
+  <% if (typeof nam != 'undefined') { %>
+
+  <div id="msgSuc" class="alert alert-success" role="alert">
+    <div class="toast-header">
+      <img
+        src="./img/clipboard2-check-fill.svg"
+        class="rounded me-2"
+        alt="..."
+      />
+      <strong class="me-auto">Data berhasil di tambahkan</strong>
+      <small><%- waktu %></small>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+    <hr />
+    <div class="toast-body">
+      <%- `Data untuk kata "${nam.benKata}" berhasil di tambahkan` %>
+    </div>
+  </div>
+
+  <% } %> <% if (typeof errors != 'undefined') { %>
+  <div id="msgSuc" class="alert alert-danger" role="alert">
+    <div class="toast-header">
+      <img src="./img/clipboard2-x-fill.svg" class="rounded me-2" alt="..." />
+      <strong class="me-auto">Terjadi kesalahan inputan</strong>
+      <small><%- waktu %></small>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+    <hr />
+    <div class="toast-body">
+      <ul>
+        <% errors.forEach(err => { %>
+        <li><%= err.msg %></li>
+        <% }) %>
+      </ul>
+    </div>
+  </div>
+  <% } %>
+  <div class="border border-secondary-subtle p-3 rounded-4">
+
+    <h3 class="text-center">Mufrodat</h3>
+    <form method="post" action="/inputdata" class="needs-validation">
+      <div class="row g-2">
+        <div class="col-md">
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default"
+              >Bentuk kalimat</span
+            >
+            <input
+              id="bnkata"
+              name="benKata"
+              type="text"
+              class="form-control text-arabic"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-default"
+              required
+              placeholder="الحَمْدُ"
+            />
+          </div>
+        </div>
+        <div class="col-md">
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default"
+              >Nama kalimat</span
+            >
+            <input
+              id="kata"
+              name="namaKata"
+              type="text"
+              class="form-control text-arabic"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-default"
+              required
+              placeholder="اسم المفرد"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="mb-3 form-check text-arabic text-center">
+        <div class="form-check form-check-inline">
+          <input
+            name="kalimah"
+            type="radio"
+            class="form-check-input"
+            id="checkBoxIsim"
+            value="الاسماء"
+            required
+          />
+          <label class="form-check-label" for="checkBoxIsim">الاسم</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            name="kalimah"
+            type="radio"
+            class="form-check-input"
+            id="checkBoxFiil"
+            value="الافعال"
+            required
+          />
+          <label class="form-check-label" for="checkBoxFiil">الفعل</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            name="kalimah"
+            type="radio"
+            class="form-check-input"
+            id="checkBoxHuruf"
+            value="الاحروف"
+            required
+          />
+          <label class="form-check-label" for="checkBoxHuruf">الحرف</label>
+        </div>
+      </div>
+      
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default"
+          >Menganut wajan</span
+        >
+        <input
+          id="wajan"
+          name="wajan"
+          type="text"
+          class="form-control text-arabic"
+          aria-label="Sizing example input"
+          aria-describedby="inputGroup-sizing-default"
+          required
+          placeholder="فَعْل"
+        />
+      </div>
+      
+      <div class="input-group">
+        <span class="input-group-text">Mengandung arti</span>
+        <textarea class="form-control" aria-label="With textarea" name="arti" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary mt-3">Masukan</button>
+    </form>
+  </div>
