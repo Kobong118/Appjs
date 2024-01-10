@@ -1,0 +1,27 @@
+<div id="livetoast" class="toast justify-content-center align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header text-bg-light">
+            <img
+                  src= <%- pathImg %>
+                  class="rounded me-2"
+                  alt="..."
+                />
+                <strong class="me-auto">
+                    <% if (Array.isArray(pesan)) { %>
+                     "Terjadi kesalahan inputan"
+                    <% } else { %>
+                     "Berhasil"
+                        <% } %>
+                </strong>
+        </div>
+              <div class="toast-body text-bg-light">
+                  <% if (Array.isArray(pesan)) { %>
+                   <% pesan.forEach(p => { %>
+                    <ul>
+                        <li><%- p %></li>
+                    </ul>
+                   <% }) %>
+                  <% } else { %>
+                    <strong class="me-auto"> <%- pesan %> </strong>
+                    <% } %>
+              </div>
+  </div>

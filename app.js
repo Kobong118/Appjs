@@ -3,7 +3,9 @@ const expressLayouts = require('express-ejs-layouts')
 const morgan = require('morgan')
 const {body, validationResult, check} = require('express-validator');
 const {synArabic} = require('./utility/valInpDat');
-const {getWaktu} = require('./utility/waktu')
+const {getWaktu} = require('./utility/waktu');
+
+
 
 const app = express()
 const port = 3000
@@ -34,9 +36,24 @@ app.get('/inputdata',(req,res)=>{
 });
 // route input data post
 app.post('/inputdata',[
+  // validasi bentuk kalimah
   body('benKata').custom((value)=>{
     if(!synArabic(value)){
       throw new Error(`Bentuk tulisan "${value}" bukan syntax arabic`)
+    }
+    return true;
+  }),
+  // validasi data nama kalimah
+  body('namaKata').custom((value)=>{
+    if(!synArabic(value)){
+      throw new Error(`Data "${value}" bukan syntax arabic`)
+    }
+    return true;
+  }),
+  // validasi data wajan
+  body('wajan').custom((value)=>{
+    if(!synArabic(value)){
+      throw new Error(`Data "${value}" bukan syntax arabic`)
     }
     return true;
   })
@@ -44,23 +61,26 @@ app.post('/inputdata',[
   const errors = validationResult(req);
   if (!errors.isEmpty()){
     // return res.status(400).json({errors:errors.array()})
-    console.log(errors.array())
-    const waktu = getWaktu()
+    // console.log("errors.array()")
+    // console.log(errors.array())
+    // const waktu = getWaktu()
+    // console.log(waktu)
     res.render('inputdata',{
       errors : errors.array(),
       title:'input data',
       layout:'layouts/main-layout',
-      waktu
+      pesanSuccErr : "error"
     })
+    
   }else{
-    console.log(req.body);
-    const waktu = getWaktu()
-    console.log(waktu)
+    // console.log(req.body);
+    // const waktu = getWaktu()
+    // console.log(waktu)
     res.render('inputdata',{
       nam : req.body,
       title:'input data',
       layout:'layouts/main-layout',
-       waktu
+       pesanSuccErr : "success"
     }
     )
   }
