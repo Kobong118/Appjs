@@ -1,4 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap');
+:root{
+    --my-bg-default:#aeaeae
+}
+
 .text-arabic{
     font-family: 'Amiri Quran', serif;
+}
+.my-bg {
+    background: var(--my-bg-default);
 }

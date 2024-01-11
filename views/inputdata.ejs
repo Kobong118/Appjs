@@ -4,7 +4,7 @@
       <% if (typeof nam != 'undefined') { %>
         <%- `<span id="pesanSucc" hidden></span>` %>
         <%- include('layouts/notif',{pesan:"Data berhasil di tambahkan",
-       pathImg:"./img/clipboard2-check-fill.svg"}) %>
+       pathImg:"/img/clipboard2-check-fill.svg"}) %>
        <% } %>
   
        <% if (typeof errors != 'undefined') { %>
@@ -13,7 +13,7 @@
          <% errors.forEach(err => { %>
           <% pesanErrors.push(err.msg) %>
          <% }) %>
-        <%- include('layouts/notif',{pathImg:"./img/clipboard2-x-fill.svg",pesan:pesanErrors}) %>
+        <%- include('layouts/notif',{pathImg:"/img/clipboard2-x-fill.svg",pesan:pesanErrors}) %>
        <% console.log(pesanErrors[0]) %>
        <% } %>
     </div>

@@ -86,6 +86,14 @@ app.post('/inputdata',[
   }
 })
 
+app.use((req, res) => {
+  res.status(404)
+  res.render('404',{
+    title:'Halaman tidak di temukan',
+    layout:'layouts/404'
+  })
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
