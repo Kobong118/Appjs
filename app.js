@@ -5,8 +5,6 @@ const {body, validationResult, check} = require('express-validator');
 const {synArabic} = require('./utility/valInpDat');
 const {getWaktu} = require('./utility/waktu');
 
-
-
 const app = express()
 const port = 3000
 
@@ -84,6 +82,43 @@ app.post('/inputdata',[
     }
     )
   }
+})
+// route kamus
+app.get('/kamus',(req, res)=>{
+res.render('kamus',{
+  title:'kamus',
+  layout:'layouts/main-layout'
+})
+})
+
+// route kamus post
+app.post('/kamus',(req,res)=>{
+  const {dbAlmaany}=require('./utility/db');
+  const sql = `SELECT id ,
+kata,
+penjelasan,
+kataPencarian,
+akarKata,
+arti
+FROM tabelKata
+WHERE kataPencarian LIKE '%${req.body.cariInKamus}%'
+ORDER BY kata`;
+dbAlmaany.all(sql,(er,rows)=>{
+    if(er){
+      throw er
+      res.render('kamus',{
+        title:'kamus',
+        layout:'layouts/main-layout',
+        dt : ''
+        })
+    }else{
+      res.render('kamus',{
+        title:'kamus',
+        layout:'layouts/main-layout',
+        dt : rows
+        })
+    }
+  })
 })
 
 app.use((req, res) => {

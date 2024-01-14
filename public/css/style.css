@@ -5,7 +5,11 @@
 
 .text-arabic{
     font-family: 'Amiri Quran', serif;
+    direction: rtl;
 }
 .my-bg {
     background: var(--my-bg-default);
+}
+#cariInKamus:hover{
+    color: #6610f2;
 }

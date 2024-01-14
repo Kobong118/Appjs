@@ -1,0 +1,40 @@
+<div class="container-fluid text-center">
+    <h3>Kamus mufrodat</h3>
+</div>
+<div class="container-fluid">
+    <form action="/kamus" method="post">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control text-arabic" placeholder="Arab - Indo Indo - Arab" aria-label="Recipient's username" aria-describedby="basic-addon2" name="cariInKamus" required>
+            <button type="submit" class="input-group-text" id="cariInKamus">Cari</button>
+          </div>
+    </form>
+</div>
+<div class="container">
+    <table class="table table-striped text-arabic table-responsive">
+       <thead>
+        <th scope="col">Akar kata</th>   
+        <th scope="col">Kata</th>
+        <th scope="col">Penjelasan</th>
+        <th scope="col">Arti</th>
+       </thead>
+       <tbody>
+       <% if (typeof dt != 'undefined') { %>
+        
+        <% if (dt.length == 0) { %>
+            <%- `<tr><td colspan="4">Data tidak tersedia</td></tr>` %>
+            <% } else { %>
+             <% dt.forEach(rw => { %>
+              <tr>
+                <td><%- rw.akarKata %></td>  
+                <td><%- rw.kata %></td>
+                <td><%- rw.penjelasan %></td>
+                <td><%- rw.arti %></td>
+              </tr>
+             <% }) %>
+        <% } %>
+
+       <% } %>
+        
+       </tbody>
+      </table>
+</div>
