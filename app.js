@@ -4,6 +4,8 @@ const morgan = require('morgan')
 const {body, validationResult, check} = require('express-validator');
 const {synArabic} = require('./utility/valInpDat');
 const {getWaktu} = require('./utility/waktu');
+const {ConDb}=require('./utility/db');
+const sqlite3 = require('sqlite3').verbose();
 
 const app = express()
 const port = 3000
@@ -93,32 +95,39 @@ res.render('kamus',{
 
 // route kamus post
 app.post('/kamus',(req,res)=>{
-  const {dbAlmaany}=require('./utility/db');
-  const sql = `SELECT id ,
-kata,
-penjelasan,
-kataPencarian,
-akarKata,
-arti
-FROM tabelKata
-WHERE kataPencarian LIKE '%${req.body.cariInKamus}%'
-ORDER BY kata`;
-dbAlmaany.all(sql,(er,rows)=>{
-    if(er){
-      throw er
-      res.render('kamus',{
-        title:'kamus',
-        layout:'layouts/main-layout',
-        dt : ''
+  let valueCari = req.body.cariInKamus
+  ConDb('./db/Almaany.db', sqlite3.OPEN_READONLY)
+  .all(`SELECT id ,
+    kata,
+    penjelasan,
+    kataPencarian,
+    akarKata,
+    arti
+    FROM tabelKata
+    WHERE kataPencarian LIKE '%${valueCari}%'
+    ORDER BY kata`,(err,hasil)=>{
+      if(err){
+        throw err
+        res.render('kamus',{
+          title:'kamus',
+          layout:'layouts/main-layout',
+          dt : ''
+          })
+      }else{
+        const sesuai = hasil.filter((objek)=>{
+         return valueCari == objek.kataPencarian
         })
-    }else{
-      res.render('kamus',{
-        title:'kamus',
-        layout:'layouts/main-layout',
-        dt : rows
-        })
-    }
-  })
+        const relevan = hasil.filter((objek)=>{
+          return valueCari != objek.kataPencarian
+         })
+        res.render('kamus',{
+          title:'kamus',
+          layout:'layouts/main-layout',
+          dt : {sesuai,relevan}
+          })
+      }
+    })
+    .close(e=>(e)? console.log(e):console.log('Database terputus'))
 })
 
 app.use((req, res) => {

@@ -1,11 +1,48 @@
 const sqlite3 = require('sqlite3').verbose();
 // const fs = require('fs')
-let dbAlmaany = new sqlite3.Database('./db/Almaany.db', sqlite3.OPEN_READWRITE, (err) => {
-  if (err) {
-    console.error(err.message);
-  }
-  console.log('Connected to the Almaany database.');
-});
+let ConDb = (pathDataBase,method)=>{
+  return new sqlite3.Database(pathDataBase,method, (err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log(`Terhubung ke ${pathDataBase} dengan method ${method}`);
+  });
+}
+// const sql = (method,field,table,key)=>{
+//   return `SELECT id ,
+//   kata,
+//   penjelasan,
+//   kataPencarian,
+//   akarKata,
+//   arti
+//   FROM tabelKata
+//   WHERE kataPencarian LIKE '%${}%'
+//   ORDER BY kata`;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // const FiltetData = (kataKunci)=>{
 //   // let Datas = []
 // // connect data base 
@@ -57,4 +94,17 @@ let dbAlmaany = new sqlite3.Database('./db/Almaany.db', sqlite3.OPEN_READWRITE, 
 //           fs.writeFileSync('./db/tmp/tmp.json','[]','utf8');
 //     }
 // }
-module.exports = {dbAlmaany}
+
+
+
+
+// Ada tiga mode pembukaan:
+
+// sqlite3.OPEN_READONLY: membuka database untuk read-only.
+// sqlite3.OPEN_READWRITE: membuka database untuk membaca dan menulis.
+// sqlite3.OPEN_CREATE: buka database, jika database belum ada buat database baru.
+// Menerima sqlite3.Database()satu atau lebih mode sebagai argumen kedua. Secara default, ini menggunakan OPEN_READWRITE | OPEN_CREATEmode. Artinya jika database belum ada maka database baru akan dibuat dan siap untuk dibaca dan ditulis.
+
+
+
+module.exports = {ConDb}
