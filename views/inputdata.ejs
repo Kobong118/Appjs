@@ -1,144 +1,97 @@
-  <h3 class="text-center">input data</h3>
-  <div style="height: 150px;" class="container-fluid">
-    <div class="container-fluid d-flex justify-content-center align-items-center ">      
-      <% if (typeof nam != 'undefined') { %>
-        <%- `<span id="pesanSucc" hidden></span>` %>
-        <%- include('layouts/notif',{pesan:"Data berhasil di tambahkan",
-       pathImg:"/img/clipboard2-check-fill.svg"}) %>
-       <% } %>
-  
-       <% if (typeof errors != 'undefined') { %>
-        <%- `<span id="pesanErr" hidden></span>` %>
-         <% const pesanErrors = [] %>
-         <% errors.forEach(err => { %>
-          <% pesanErrors.push(err.msg) %>
-         <% }) %>
-        <%- include('layouts/notif',{pathImg:"/img/clipboard2-x-fill.svg",pesan:pesanErrors}) %>
-       <% console.log(pesanErrors[0]) %>
-       <% } %>
+  <div class="container ">
+    <div class="row">
+      <div class="col-sm-6 mt-3">
+        <div class="card">
+          <div class="card-header">
+            <h5>Input Data kamus mufrodat</h5>
+          </div>
+          <div class="card-body">
+              <form action="/inputdata/kamus.kelola" method="post" class="">
+                <div class="input-group input-group-sm mb-3 was-validated">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Kata</span>
+                  <input <% if (typeof dt != 'undefined') { %>
+                   value ="<%- dt.kata %>"
+                  <% } %> name="Kata" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required>
+                  <div class="invalid-feedback">
+                    Bidang tidak boleh kosong
+                  </div>
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Penjelasan</span>
+                  <input <% if (typeof dt != 'undefined') { %>
+                   value ="<%- dt.penjelasan %>"
+                  <% } %> name="Penjelasan" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div class="input-group input-group-sm mb-3 was-validated">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Kata kunci</span>
+                  <input <% if (typeof dt != 'undefined') { %>
+                   value ="<%- dt.kataPencarian %>"
+                  <% } %> name="kataKunci" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required>
+                  <div class="invalid-feedback">
+                    Bidang tidak boleh kosong
+                  </div>
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Kata asal</span>
+                  <input <% if (typeof dt != 'undefined') { %>
+                   value ="<%- dt.akarKata %>"
+                  <% } %> name="kataAsal" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Arti</span>
+                  <textarea name="Arti" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"><% if (typeof dt != 'undefined') { %>
+                    <%- dt.arti %>
+                   <% } %> </textarea>
+                </div>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                  <% if (typeof dt != 'undefined') { %>
+                    <button class="btn btn-primary" type="submit">Perbaharui</button>
+                    <% } else { %>
+                      <button class="btn btn-primary" type="submit">Simpan</button>
+                  <% } %>
+                </div>
+              </form>
+          </div>
+          <div class="card-footer">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 mt-3">
+        <div class="card">
+          <div class="card-header">
+            <h5>Input Data kamus mufrodat</h5>
+          </div>
+          <div class="card-body">
+              <form action="/inputdata/soal.kelola" method="post">
+                <div class="input-group input-group-sm mb-3">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Kata kunci</span>
+                  <input name="kataKunci" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Kata</span>
+                  <input name="Kata" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Kata asal</span>
+                  <input name="kataAsal" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Penjelasan</span>
+                  <input name="Penjelasan" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Arti</span>
+                  <input name="Arti" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                  <button class="btn btn-primary" type="submit">Simpan</button>
+                </div>
+              </form>
+          </div>
+          <div class="card-footer">
+            <p><span></span> Kata tersedia</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
- 
- 
-  <div class="border border-secondary-subtle p-3 rounded-4">
-    <h3 class="text-center">Mufrodat</h3>
-    <form method="post" action="/inputdata" class="needs-validation">
-      <div class="row g-2">
-        <div class="col-md">
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="inputGroup-sizing-default"
-              >Bentuk kalimat</span
-            >
-            <input
-              id="bnkata"
-              name="benKata"
-              type="text"
-              class="form-control text-arabic"
-              aria-label="Sizing example input"
-              aria-describedby="inputGroup-sizing-default"
-              required
-              placeholder="الحَمْدُ"
-            />
-            <small class="form-text">Masukan harus tulisan Arabic</small>
-          </div>
-        </div>
-        <div class="col-md">
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="inputGroup-sizing-default"
-              >Nama kalimat</span
-            >
-            <input
-              id="kata"
-              name="namaKata"
-              type="text"
-              class="form-control text-arabic"
-              aria-label="Sizing example input"
-              aria-describedby="inputGroup-sizing-default"
-              required
-              placeholder="اسم المفرد"
-            />
-          </div>
-        </div>
-      </div>
-      <div class="mb-3 form-check text-arabic text-center">
-        <div class="form-check form-check-inline">
-          <input
-            name="kalimah"
-            type="radio"
-            class="form-check-input"
-            id="checkBoxIsim"
-            value="الاسماء"
-            required
-          />
-          <label class="form-check-label" for="checkBoxIsim">الاسم</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input
-            name="kalimah"
-            type="radio"
-            class="form-check-input"
-            id="checkBoxFiil"
-            value="الافعال"
-            required
-          />
-          <label class="form-check-label" for="checkBoxFiil">الفعل</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input
-            name="kalimah"
-            type="radio"
-            class="form-check-input"
-            id="checkBoxHuruf"
-            value="الاحروف"
-            required
-          />
-          <label class="form-check-label" for="checkBoxHuruf">الحرف</label>
-        </div>
-      </div>
-      
-      <div class="input-group mb-3">
-        <span class="input-group-text" id="inputGroup-sizing-default"
-          >Menganut wajan</span
-        >
-        <input
-          id="wajan"
-          name="wajan"
-          type="text"
-          class="form-control text-arabic"
-          aria-label="Sizing example input"
-          aria-describedby="inputGroup-sizing-default"
-          required
-          placeholder="فَعْل"
-        />
-      </div>
-      
-      <div class="input-group">
-        <span class="input-group-text">Mengandung arti</span>
-        <textarea class="form-control" aria-label="With textarea" name="arti" required></textarea>
-      </div>
-      <div class="row pt-3">
-        <div class="col-md">
-          <button type="submit" class="btn btn-primary mt-3">Masukan</button>
-        </div>
-        <div class="col-md">
-        </div>
-      </div>
-    </form>
-  </div>
-  
-  <script
-  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-  crossorigin="anonymous"
->
-</script>
-<script>
-const livetoast = document.querySelector('#livetoast');
-const toastBootstrap = bootstrap.Toast.getOrCreateInstance(livetoast);
-const pesanSucc = document.querySelector('span#pesanSucc')
-const pesanErr = document.querySelector('span#pesanErr')
-if ((pesanErr || pesanSucc) !== null) {
-  toastBootstrap.show()
-}
-</script>

@@ -12,9 +12,9 @@
 <div class="container">
     <table class="table text-arabic table-responsive table-striped-columns">
        <thead>
+           <th scope="col">Kata</th>
+           <th scope="col">Penjelasan</th>
         <th scope="col">Akar kata</th>   
-        <th scope="col">Kata</th>
-        <th scope="col">Penjelasan</th>
         <th scope="col">Arti</th>
        </thead>
        <tbody>
@@ -24,9 +24,9 @@
             <% if (dt.sesuai.length != 0) { %>
                 <% dt.sesuai.forEach(rw => { %>
                  <tr>
+                     <td><%- rw.kata %></td>
+                     <td><%- rw.penjelasan %></td>
                    <td><%- rw.akarKata %></td>  
-                   <td><%- rw.kata %></td>
-                   <td><%- rw.penjelasan %></td>
                    <td><%- rw.arti %></td>
                  </tr>
                 <% }) %>
@@ -38,9 +38,9 @@
                 <%- `<tr class="text-center fs-6 table-info"><td colspan="4"><em>Data yang relevan untuk kata yang anda cari</em></td></tr>` %>
                 <% dt.relevan.forEach(rw => { %>
                  <tr>
+                    <td><%- rw.kata %></td>
+                    <td><%- rw.penjelasan %></td>
                    <td><%- rw.akarKata %></td>  
-                   <td><%- rw.kata %></td>
-                   <td><%- rw.penjelasan %></td>
                    <td><%- rw.arti %></td>
                  </tr>
                 <% }) %>

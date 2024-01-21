@@ -18,6 +18,9 @@ app.use(morgan('dev'))
 app.use(express.static('public'));
 app.use(express.urlencoded({extended:true}));
 
+// path databse
+const pathAlmaany = './db/Almaany.db'
+
 // route home
 app.get('/', (req, res) => {
   res.render('index',{title:'Ikhwaanii Media',
@@ -29,62 +32,105 @@ app.use('/inputdata',(req,res,next)=>{
 })
 // route input data
 app.get('/inputdata',(req,res)=>{
-  res.render('inputdata',{
-    title:'input data',
-    layout:'layouts/main-layout'
+  ConDb(pathAlmaany)
+  .get('SELECT count(kata) FROM tabelKata',(er,suc)=>{
+    if(er){
+      throw er
+    }else{
+      res.render('inputdata',{
+        title:'input data',
+        layout:'layouts/curd-layout',
+        jd : Object.values(suc)[0]
+      })
+    }
   })
+  
 });
 // route input data post
-app.post('/inputdata',[
-  // validasi bentuk kalimah
-  body('benKata').custom((value)=>{
-    if(!synArabic(value)){
-      throw new Error(`Bentuk tulisan "${value}" bukan syntax arabic`)
-    }
-    return true;
-  }),
-  // validasi data nama kalimah
-  body('namaKata').custom((value)=>{
-    if(!synArabic(value)){
-      throw new Error(`Data "${value}" bukan syntax arabic`)
-    }
-    return true;
-  }),
-  // validasi data wajan
-  body('wajan').custom((value)=>{
-    if(!synArabic(value)){
-      throw new Error(`Data "${value}" bukan syntax arabic`)
-    }
-    return true;
-  })
-], (req,res)=>{
-  const errors = validationResult(req);
-  if (!errors.isEmpty()){
-    // return res.status(400).json({errors:errors.array()})
-    // console.log("errors.array()")
-    // console.log(errors.array())
-    // const waktu = getWaktu()
-    // console.log(waktu)
-    res.render('inputdata',{
-      errors : errors.array(),
-      title:'input data',
-      layout:'layouts/main-layout',
-      pesanSuccErr : "error"
-    })
+app.post('/inputdata/:kategori.:aksi',(req,res,next)=>{
+  if(req.params.kategori == "kamus"){
+    // validasi ketersediaan data
+    ConDb(pathAlmaany)
+    .get(`SELECT kata,
+    penjelasan,
+    kataPencarian,
+    akarKata,
+    arti
+    FROM tabelKata
+    WHERE kataPencarian = '${req.body.kataKunci}'`,(e,r)=>{
+      if(e){
+        return console.error(err.message);
+      }
+      if (r.kata != req.body.Kata || r.kataPencarian != req.body.kataKunci) {
+       console.log('siap di insert') ;
+       res.render('kelolaKamus',{
+        title:'kelola data kamus',
+        layout:'layouts/curd-layout'
+      })
+      }else{
+        res.render('kelolaKamus',{
+          title:'kelola data kamus',
+          layout:'layouts/curd-layout',
+          dt : r
+        })
+      }
+    }).close()
     
   }else{
-    // console.log(req.body);
-    // const waktu = getWaktu()
-    // console.log(waktu)
-    res.render('inputdata',{
-      nam : req.body,
-      title:'input data',
-      layout:'layouts/main-layout',
-       pesanSuccErr : "success"
-    }
-    )
+    next()
   }
 })
+
+// app.post('/inputdata',[
+//   // validasi bentuk kalimah
+//   body('benKata').custom((value)=>{
+//     if(!synArabic(value)){
+//       throw new Error(`Bentuk tulisan "${value}" bukan syntax arabic`)
+//     }
+//     return true;
+//   }),
+//   // validasi data nama kalimah
+//   body('namaKata').custom((value)=>{
+//     if(!synArabic(value)){
+//       throw new Error(`Data "${value}" bukan syntax arabic`)
+//     }
+//     return true;
+//   }),
+//   // validasi data wajan
+//   body('wajan').custom((value)=>{
+//     if(!synArabic(value)){
+//       throw new Error(`Data "${value}" bukan syntax arabic`)
+//     }
+//     return true;
+//   })
+// ], (req,res)=>{
+//   const errors = validationResult(req);
+//   if (!errors.isEmpty()){
+//     // return res.status(400).json({errors:errors.array()})
+//     // console.log("errors.array()")
+//     // console.log(errors.array())
+//     // const waktu = getWaktu()
+//     // console.log(waktu)
+//     res.render('inputdata',{
+//       errors : errors.array(),
+//       title:'input data',
+//       layout:'layouts/curd-layout',
+//       pesanSuccErr : "error"
+//     })
+    
+//   }else{
+//     // console.log(req.body);
+//     // const waktu = getWaktu()
+//     // console.log(waktu)
+//     res.render('inputdata',{
+//       nam : req.body,
+//       title:'input data',
+//       layout:'layouts/curd-layout',
+//        pesanSuccErr : "success"
+//     }
+//     )
+//   }
+// })
 // route kamus
 app.get('/kamus',(req, res)=>{
 res.render('kamus',{
@@ -96,7 +142,7 @@ res.render('kamus',{
 // route kamus post
 app.post('/kamus',(req,res)=>{
   let valueCari = req.body.cariInKamus
-  ConDb('./db/Almaany.db', sqlite3.OPEN_READONLY)
+  ConDb(pathAlmaany, sqlite3.OPEN_READONLY)
   .all(`SELECT id ,
     kata,
     penjelasan,
